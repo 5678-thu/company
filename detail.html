@@ -108,10 +108,10 @@ var url_str =window.location.href;
             $('#date').html(data['Global Quote']['07. latest trading day']);
             var change = data['Global Quote']['09. change'];
             if(change<0){
-                $('.sign').html("⯆");
+                $('.sign').html("&#11206;");
                 $('.high_price').addClass('down');
             }else{
-                $('.sign').html("⯅"); 
+                $('.sign').html("&#11205;"); 
                 $('.high_price').addClass('up');
             }
         }else{
