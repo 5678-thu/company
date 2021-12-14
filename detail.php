@@ -17,6 +17,7 @@ include('config.php');
   <?php
   if (isset($_SESSION['access_token'])) {
     include('navbar.php');
+    $ID = $_SESSION['id'];
 
 
   ?>
@@ -59,7 +60,7 @@ include('config.php');
             </li>
           </ul>
           <input type="number" id="num" placeholder="amount">
-          <input type="submit" value="BUY" class="btn btn-primary">
+          <input type="button" id="buy" value="BUY" class="btn btn-primary">
 
         </div>
         <div class="card-footer text-muted">
@@ -108,7 +109,6 @@ include('config.php');
           function: functionType,
           symbol: symbol,
           apikey: API_Key
-
         },
         dataType: 'json',
         method: 'GET',
@@ -157,6 +157,31 @@ include('config.php');
 
       })
     }
+    $('#buy').click(function() {
+      var amount = $('#num').val();
+      var price = $('#price').html();
+      var id = '<?php echo $ID; ?>';
+      var symbol = $('#symbol').html();
+
+      $.ajax({
+        url: 'addStock.php',
+        data: {
+          amount: amount,
+          price: price,
+          id: id,
+          symbol: symbol
+        },
+        method: 'GET',
+        success: function() {
+          window.location.replace("index.php");
+
+
+        }
+
+
+
+      })
+    })
   </script>
 
 </body>

@@ -20,8 +20,8 @@ if (isset($_GET['code'])) {
         if (!empty($usersdata['given_name'])) {
             $_SESSION['given_name'] = $usersdata['given_name'];
         }
-        if (!empty($usersdata['picture'])) {
-            $_SESSION['picture'] = $usersdata['picture'];
+        if (!empty($usersdata['id'])) {
+            $_SESSION['id'] = $usersdata['id'];
         }
     }
 }
@@ -124,7 +124,7 @@ if (isset($_GET['code'])) {
     <?php
     if (isset($_SESSION['access_token'])) {
         include('navbar.php');
-
+        $ID = $_SESSION['id'];
 
     ?>
         <div class="container">
@@ -144,7 +144,9 @@ if (isset($_GET['code'])) {
                     <div id="result"></div>
                 </div>
             </div>
+            <div id="table">
 
+            </div>
         </div>
 
     <?php } else {
@@ -167,6 +169,53 @@ if (isset($_GET['code'])) {
         var URL = "https://www.alphavantage.co/query?";
         var API_Key = "ARPNKQMH23YF736Z";
         var functionType = 'SYMBOL_SEARCH';
+
+        onload = function() {
+            var id = '<?php echo $ID ?>';
+            $.ajax({
+                url: 'select.php',
+                data: {
+                    id: id
+                },
+
+                dataType: 'XML',
+
+                success: function(data) {
+                    var xml = $(data);
+                    var stocks = xml.find('stock');
+                    var table = `<table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Symbol</th>
+            <th scope="col">Amount</th>
+            <th scope="col">Price</th>
+            <th scope="col">Date_Time</th>
+            <th scope+"col">Delete Data</th>
+          </tr>
+        </thead>
+        <tbody id="table">`;
+                    stocks.each(function() {
+                        table += `
+                        <tr>
+                        <td>${$(this).find('Symbol').text()}</td>
+                        <td>${$(this).find('Amount').text()}</td>
+                        <td>${$(this).find('Price').text()}</td>
+                        <td>${$(this).find('Date_Time').text()}</td>
+                        <td><input type="submit" value="delete" onclick="delete()"></td>
+                        </tr>
+                        `;
+                    });
+                    table += `</tbody>
+                    </table>`;
+                    $('#table').html(table);
+                }
+
+
+
+            })
+
+
+        }
 
         function fetchAPI() {
             $.ajax({
