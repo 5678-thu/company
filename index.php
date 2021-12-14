@@ -197,11 +197,11 @@ if (isset($_GET['code'])) {
                     stocks.each(function() {
                         table += `
                         <tr>
-                        <td>${$(this).find('Symbol').text()}</td>
-                        <td>${$(this).find('Amount').text()}</td>
-                        <td>${$(this).find('Price').text()}</td>
-                        <td>${$(this).find('Date_Time').text()}</td>
-                        <td><input type="submit" value="delete" onclick="delete()"></td>
+                        <td class="symbol">${$(this).find('Symbol').text()}</td>
+                        <td class="amount">${$(this).find('Amount').text()}</td>
+                        <td class="price">${$(this).find('Price').text()}</td>
+                        <td class="datetime">${$(this).find('Date_Time').text()}</td>
+                        <td><input type="button" class="deletebutton" value="delete"></td>
                         </tr>
                         `;
                     });
@@ -242,6 +242,7 @@ if (isset($_GET['code'])) {
             });
 
         }
+        $(".deletebutton").each
     </script>
 
 
